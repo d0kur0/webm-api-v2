@@ -1,9 +1,20 @@
-import { getBoards } from "./http/getBoards";
-import { createServer } from "restify";
+import Fastify from "fastify";
+import { getFiles } from "./http/getFiles.mjs";
+import { getBoards } from "./http/getBoards.mjs";
+import { getAllowedExtensions } from "./http/getAllowedExtensions.mjs";
+import common from "./configs/common.json" assert { type: "json" };
 
-const server = createServer();
-const port = process.env.PORT || 5050;
+const fastify = Fastify({
+	logger: true,
+});
 
-server.get("/getBoards", getBoards);
+fastify.get("/getBoards", getBoards);
+fastify.get("/getFiles", getFiles);
+fastify.get("/getAllowedExtensions", getAllowedExtensions);
 
-server.listen(port, () => console.log(`Open: http://localhost:${port}`));
+try {
+	await fastify.listen(common.port);
+} catch (error) {
+	fastify.log.error(error);
+	process.exit(1);
+}

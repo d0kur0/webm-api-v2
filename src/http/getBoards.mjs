@@ -1,5 +1,5 @@
-import { allowedBoards } from "../configs/allowedBoards";
+import allowedBoards from "../configs/allowedBoards.json" assert { type: "json" };
 
-export const getBoards = (_, response) => {
-	response.send(200, allowedBoards);
+export const getBoards = () => {
+	return allowedBoards;
 };

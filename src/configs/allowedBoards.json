@@ -1,1 +1,1 @@
-export const allowedBoards = ["1"];
+["b", "fg", "fur", "media"]
